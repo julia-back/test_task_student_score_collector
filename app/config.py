@@ -1,10 +1,5 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import BaseModel, PostgresDsn
-from dotenv import load_dotenv
-import os
-
-
-load_dotenv()
 
 
 class RunConfig(BaseModel):
@@ -13,12 +8,18 @@ class RunConfig(BaseModel):
 
 
 class DatabaseConfig(BaseModel):
-    url: PostgresDsn = os.getenv("DATABASE_URL")
+    url: PostgresDsn
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_nested_delimiter="__",
+        case_sensitive=False
+    )
+
     run: RunConfig = RunConfig()
-    db: DatabaseConfig = DatabaseConfig()
+    db: DatabaseConfig
 
 
 settings = Settings()
