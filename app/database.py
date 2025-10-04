@@ -15,4 +15,4 @@ class DatabaseManager:
             yield session
 
 
-db_manager = DatabaseManager(settings.db.url, echo=True)
+db_manager = DatabaseManager(str(settings.db.url), echo=True)
