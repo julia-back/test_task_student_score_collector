@@ -1,5 +1,6 @@
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from config import settings
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
 class DatabaseManager:
@@ -16,3 +17,7 @@ class DatabaseManager:
 
 
 db_manager = DatabaseManager(str(settings.db.url), echo=True)
+
+
+class Base(DeclarativeBase):
+    pass
