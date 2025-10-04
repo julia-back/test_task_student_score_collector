@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from pydantic import BaseModel
+from pydantic import BaseModel, PostgresDsn
 from dotenv import load_dotenv
 import os
 
@@ -13,7 +13,7 @@ class RunConfig(BaseModel):
 
 
 class DatabaseConfig(BaseModel):
-    url: str = os.getenv("DATABASE_URL")
+    url: PostgresDsn = os.getenv("DATABASE_URL")
 
 
 class Settings(BaseSettings):
