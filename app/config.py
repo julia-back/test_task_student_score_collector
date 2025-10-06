@@ -1,5 +1,9 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import BaseModel, PostgresDsn
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 class RunConfig(BaseModel):
@@ -8,7 +12,7 @@ class RunConfig(BaseModel):
 
 
 class DatabaseConfig(BaseModel):
-    url: PostgresDsn
+    url: PostgresDsn = PostgresDsn(os.getenv("DB__URL"))
 
 
 class Settings(BaseSettings):
@@ -19,7 +23,7 @@ class Settings(BaseSettings):
     )
 
     run: RunConfig = RunConfig()
-    db: DatabaseConfig
+    db: DatabaseConfig = DatabaseConfig()
 
 
 settings = Settings()

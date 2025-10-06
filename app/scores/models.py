@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Mapped, mapped_column, validates
-from database import Base
+from app.database import Base
 from sqlalchemy import String, Integer
 
 
 class Score(Base):
+    __tablename__ = "scores"
+
     id: Mapped[int] = mapped_column(primary_key=True)
     subject: Mapped[str] = mapped_column(String(55))
     point: Mapped[int] = mapped_column(Integer)

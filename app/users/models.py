@@ -1,6 +1,6 @@
-from database import Base
+from app.database import Base
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, BigInteger
+from sqlalchemy import BigInteger
 
 
 class User(Base):
