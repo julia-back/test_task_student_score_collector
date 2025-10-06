@@ -10,7 +10,6 @@ from database import db_manager
 @asynccontextmanager
 async def lifespan(fastapi_app: FastAPI):
     yield
-    print("dispose engine")
     await db_manager.dispose_engine()
 
 
