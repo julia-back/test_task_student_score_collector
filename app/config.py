@@ -24,6 +24,7 @@ class Settings(BaseSettings):
 
     run: RunConfig = RunConfig()
     db: DatabaseConfig = DatabaseConfig()
+    secret_key: str
 
 
 settings = Settings()
