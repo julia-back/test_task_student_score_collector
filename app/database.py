@@ -11,8 +11,9 @@ class DatabaseManager:
     async def dispose_engine(self):
         await self.engine.dispose()
 
-    async def get_session(self):
-        async with self.session_maker() as session:
+    @staticmethod
+    async def get_session():
+        async with db_manager.session_maker() as session:
             yield session
 
 
