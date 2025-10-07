@@ -3,6 +3,7 @@ from pydantic import BaseModel, PostgresDsn
 from dotenv import load_dotenv
 import os
 from datetime import timezone
+from typing import Any
 
 load_dotenv()
 
@@ -29,7 +30,7 @@ class Settings(BaseSettings):
         case_sensitive=False
     )
 
-    timezone: timezone = timezone.utc
+    timezone: Any = timezone.utc
 
     run: RunConfig = RunConfig()
     db: DatabaseConfig = DatabaseConfig()

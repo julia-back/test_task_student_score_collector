@@ -1,4 +1,4 @@
-from app.database import Base
+from database import Base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import BigInteger, String
 
