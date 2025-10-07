@@ -1,14 +1,15 @@
 from app.database import Base
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import BigInteger
+from sqlalchemy import BigInteger, String
 
 
 class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True, unique=True, index=True)
-    first_name: Mapped[str]
-    last_name: Mapped[str]
+    username: Mapped[str] = mapped_column(String(30), unique=True, index=True)
+    first_name: Mapped[str] = mapped_column(String(30))
+    last_name: Mapped[str] = mapped_column(String(30))
     telegram_id: Mapped[str] = mapped_column(BigInteger, unique=True, nullable=True)
     hashed_password: Mapped[str]
     is_active: Mapped[bool] = mapped_column(default=True)
