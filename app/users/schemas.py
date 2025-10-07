@@ -7,13 +7,14 @@ class UserBase(BaseModel):
 
 
 class CreateUser(UserBase):
-    pass
+    password: str
 
 
 class ReadUser(UserBase):
     id: int
     telegram_id: int | None
     is_active: bool
+    hashed_password: str
 
 
 class UserInDB(UserBase):
