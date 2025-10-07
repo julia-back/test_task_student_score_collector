@@ -10,3 +10,5 @@ class User(Base):
     first_name: Mapped[str]
     last_name: Mapped[str]
     telegram_id: Mapped[str] = mapped_column(BigInteger, unique=True, index=True)
+    hashed_password: Mapped[str]
+    is_active: Mapped[bool] = mapped_column(default=True)
