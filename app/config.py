@@ -23,6 +23,10 @@ class TokenConfig(BaseModel):
     access_token_expire_minutes: int = 30
 
 
+class TelegramBotConfig(BaseModel):
+    api_key: str = os.getenv("TELEGRAM_BOT__API_KEY")
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -35,6 +39,7 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     db: DatabaseConfig = DatabaseConfig()
     token: TokenConfig = TokenConfig()
+    telegram_bot: TelegramBotConfig = TelegramBotConfig()
 
 
 settings = Settings()
