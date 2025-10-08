@@ -1,15 +1,16 @@
 from aiogram import types
 from database import DatabaseManager
-from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from users.models import User
 from sqlalchemy import select
 from bot_telegram.keyboards import get_start_keyboard, get_register_button
 
 
-async def sey_hi_or_start_register(message: types.Message, session: AsyncSession = Depends(DatabaseManager.get_session)):
-    result = await session.execute(select(User).where(User.telegram_id == message.chat.id))
-    user = result.scalar_one_or_none()
+async def sey_hi_or_start_register(message: types.Message):
+    user = None
+    async for session in DatabaseManager.get_session():
+        result = await session.execute(select(User).where(User.telegram_id == message.chat.id))
+        user = result.scalar_one_or_none()
 
     if user:
         await message.answer(f"Привет, {User.username}!\nВыберите действие в меню:",
