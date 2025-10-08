@@ -38,3 +38,5 @@ async def view_user_scores(message: types.Message, state: FSMContext):
         await message.answer(text="Ваши баллы:", reply_markup=buttons)
     else:
         await message.answer(text="Пользователь не зарегистрирован.")
+
+    await state.clear()
