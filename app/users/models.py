@@ -11,7 +11,7 @@ class User(Base):
     first_name: Mapped[str] = mapped_column(String(30))
     last_name: Mapped[str] = mapped_column(String(30))
     telegram_id: Mapped[str] = mapped_column(BigInteger, unique=True, nullable=True)
-    hashed_password: Mapped[str]
+    hashed_password: Mapped[str] = mapped_column(nullable=True)
     is_active: Mapped[bool] = mapped_column(default=True)
 
     scores: Mapped[list["Score"]] = relationship("Score", back_populates="user_owner")
