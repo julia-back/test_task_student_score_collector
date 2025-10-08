@@ -1,6 +1,6 @@
-from sqlalchemy.orm import Mapped, mapped_column, validates
+from sqlalchemy.orm import Mapped, mapped_column, validates, relationship
 from database import Base
-from sqlalchemy import String, Integer
+from sqlalchemy import String, Integer, ForeignKey
 
 
 class Score(Base):
@@ -9,6 +9,9 @@ class Score(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     subject: Mapped[str] = mapped_column(String(55))
     point: Mapped[int] = mapped_column(Integer)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_owner: Mapped["User"] = relationship("User", back_populates="scores")
 
     @validates("point")
     def validate_point(self, key: str, value: int):

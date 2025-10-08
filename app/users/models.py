@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, String
 
 
@@ -13,3 +13,5 @@ class User(Base):
     telegram_id: Mapped[str] = mapped_column(BigInteger, unique=True, nullable=True)
     hashed_password: Mapped[str]
     is_active: Mapped[bool] = mapped_column(default=True)
+
+    scores: Mapped[list["Score"]] = relationship("Score", back_populates="user_owner")

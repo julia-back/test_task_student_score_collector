@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from config import settings
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import MetaData
 
 
 class DatabaseManager:
@@ -21,4 +22,4 @@ db_manager = DatabaseManager(str(settings.db.url), echo=True)
 
 
 class Base(DeclarativeBase):
-    pass
+    metadata = MetaData(naming_convention=settings.db.naming_convention)
