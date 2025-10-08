@@ -1,6 +1,5 @@
 from aiogram import types
 from database import DatabaseManager
-from sqlalchemy.ext.asyncio import AsyncSession
 from users.models import User
 from sqlalchemy import select
 from bot_telegram.keyboards import get_start_keyboard, get_register_button
