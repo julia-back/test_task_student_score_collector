@@ -17,6 +17,7 @@ pyjwt = "^2.10.1"
 pwdlib = {extras = ["argon2"], version = "^0.2.1"}
 python-multipart = "^0.0.20"
 aiogram = "^3.22.0"
+vkbottle = "^4.6.2"
 
 
 [tool.poetry.group.develop.dependencies]

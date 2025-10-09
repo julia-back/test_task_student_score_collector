@@ -34,6 +34,10 @@ class TelegramBotConfig(BaseModel):
     api_key: str = os.getenv("TELEGRAM_BOT__API_KEY")
 
 
+class VKBotConfig(BaseModel):
+    api_key: str = os.getenv("VK_BOT__API_KEY")
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -47,6 +51,7 @@ class Settings(BaseSettings):
     db: DatabaseConfig = DatabaseConfig()
     token: TokenConfig = TokenConfig()
     telegram_bot: TelegramBotConfig = TelegramBotConfig()
+    vk_bot: VKBotConfig = VKBotConfig()
 
 
 settings = Settings()
