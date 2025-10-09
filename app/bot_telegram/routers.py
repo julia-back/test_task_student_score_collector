@@ -1,13 +1,15 @@
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart, Command, StateFilter
 from bot_telegram.services.start import sey_hi_or_start_register
-from bot_telegram.services.view_scores import view_user_scores, ask_subject
-from bot_telegram.fsm_states import AskSubjectState, RegistrationStates
+from bot_telegram.services.view_scores import view_user_scores, ask_subject_for_view
+from bot_telegram.fsm_states import ViewScoresState, RegistrationStates, EnterScoreState
 from aiogram.fsm.context import FSMContext
 from bot_telegram.services.register import (ask_username, check_unique_and_save_username,
                                             ask_first_name, save_first_name, ask_last_name,
                                             save_last_name, save_user_data_in_db,
                                             cansel_register)
+from bot_telegram.services.enter_scores import (ask_subject_for_enter_score, save_subject,
+                                                ask_point, save_point, save_score_in_db)
 
 
 router = Router()
@@ -49,16 +51,28 @@ async def handler_cansel_register(message: types.Message, state: FSMContext):
 
 @router.message(F.text == "Ввести баллы")
 @router.message(Command("enter_scores"))
-async def handler_enter_scores(message: types.Message): ##############################################################
-    pass
+async def handler_enter_scores(message: types.Message, state: FSMContext):
+    await ask_subject_for_enter_score(message, state)
+
+
+@router.message(EnterScoreState.wait_subject)
+async def handler_wait_subject_for_enter(message: types.Message, state: FSMContext):
+    await save_subject(message, state)
+    await ask_point(message, state)
+
+
+@router.message(EnterScoreState.wait_score)
+async def handler_wait_score_for_enter(message: types.Message, state: FSMContext):
+    await save_point(message, state)
+    await save_score_in_db(message, state)
 
 
 @router.message(F.text == "Просмотреть баллы")
 @router.message(Command("view_scores"))
 async def handler_view_scores(message: types.Message, state: FSMContext):
-    await ask_subject(message, state)
+    await ask_subject_for_view(message, state)
 
 
-@router.message(AskSubjectState.wait_subject)
-async def handler_wait_subject(message: types.Message, state: FSMContext):
+@router.message(ViewScoresState.wait_subject)
+async def handler_wait_subject_for_view(message: types.Message, state: FSMContext):
     await view_user_scores(message, state)

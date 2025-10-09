@@ -5,7 +5,7 @@ from users.models import User
 from scores.models import Score
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.fsm.context import FSMContext
-from bot_telegram.fsm_states import AskSubjectState
+from bot_telegram.fsm_states import ViewScoresState
 
 
 async def get_user_scores_from_inactive_buttons(user_scores: list[Score]):
@@ -15,9 +15,9 @@ async def get_user_scores_from_inactive_buttons(user_scores: list[Score]):
     return builder.adjust(1).as_markup()
 
 
-async def ask_subject(message: types.Message, state: FSMContext):
+async def ask_subject_for_view(message: types.Message, state: FSMContext):
     await message.answer(text="Введите название предмета или 'Все' для просмотра всех баллов.")
-    await state.set_state(AskSubjectState.wait_subject)
+    await state.set_state(ViewScoresState.wait_subject)
 
 
 async def view_user_scores(message: types.Message, state: FSMContext):

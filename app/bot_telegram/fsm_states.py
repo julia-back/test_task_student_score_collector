@@ -8,6 +8,12 @@ class RegistrationStates(StatesGroup):
     wait_for_last_name = State()
 
 
-class AskSubjectState(StatesGroup):
+class ViewScoresState(StatesGroup):
 
     wait_subject = State()
+
+
+class EnterScoreState(StatesGroup):
+
+    wait_subject = State()
+    wait_score = State()
