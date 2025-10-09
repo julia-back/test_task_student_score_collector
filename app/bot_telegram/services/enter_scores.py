@@ -15,6 +15,7 @@ async def ask_subject_for_enter_score(message: types.Message, state: FSMContext)
 async def save_subject(message: types.Message, state: FSMContext):
     subject = message.text.strip().title()
     await state.update_data(subject=subject)
+    return True
 
 
 async def ask_point(message: types.Message, state: FSMContext):
@@ -36,6 +37,8 @@ async def save_point(message: types.Message, state: FSMContext):
     else:
         await message.answer(text="Некорректный ввод. Введите целое число от 0 до 100.")
 
+    return True
+
 
 async def save_score_in_db(message: types.Message, state: FSMContext):
     user = None
@@ -51,13 +54,13 @@ async def save_score_in_db(message: types.Message, state: FSMContext):
                                   "пройдите регистрацию.")
         return
 
-    data = state.get_data()
+    data = await state.get_data()
     subject = data.get("subject")
     point = data.get("point")
 
     score_for_save = Score(subject=subject, point=point, user_id=user_id)
     async for session in DatabaseManager.get_session():
-        await session.add(score_for_save)
+        session.add(score_for_save)
         await session.commit()
         await session.refresh(score_for_save)
 

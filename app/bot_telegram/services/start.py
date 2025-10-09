@@ -15,6 +15,7 @@ async def sey_hi_or_start_register(message: types.Message):
         await message.answer(f"Привет, {User.username}!\nВыберите действие в меню:",
                              reply_markup=get_start_keyboard())
     else:
-        await message.answer(text="Добро пожаловать! Давай начем регистрацию:\n"
-                                  "Чтобы отменить регистрацию введите команду /cansel",
+        await message.answer(text="Добро пожаловать! Давай начем регистрацию\n"
+                                  "Для старта нажми книпку внизу:\n"
+                                  "(чтобы отменить регистрацию введите команду /cansel)",
                              reply_markup=get_register_button())
