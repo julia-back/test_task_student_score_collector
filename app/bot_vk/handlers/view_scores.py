@@ -7,6 +7,7 @@ from bot_vk.services.view_scores import ask_subject_for_view_scores, view_user_s
 labeler = BotLabeler()
 
 
+@labeler.private_message(StateRule(None), text="Просмотреть баллы")
 @labeler.private_message(StateRule(None),
                          CommandRule("view_scores", prefixes=["!", "/"]))
 async def handler_view_score(message: Message):

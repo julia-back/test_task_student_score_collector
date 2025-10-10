@@ -46,8 +46,8 @@ async def save_user_data_in_db(message: Message):
             await session.refresh(user)
 
         await message.answer("Поздравляем, регистрация завершена!\n"
-                             "Имя пользователя: \n"
-                             "Имя: \n"
-                             "Фамилия: \n")
+                             f"Имя пользователя: {user.username}\n"
+                             f"Имя: {user.first_name}\n"
+                             f"Фамилия: {user.last_name}\n")
     finally:
         await state_dispenser.delete(message.from_id)
