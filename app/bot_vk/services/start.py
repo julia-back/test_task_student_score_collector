@@ -3,7 +3,6 @@ from database import DatabaseManager
 from users.models import User
 from sqlalchemy import select
 from bot_vk.keyboards import start_keyboard, register_button
-from bot_vk.states import RegisterState, state_dispenser
 
 
 async def say_hi_or_start_register(message: Message):
@@ -18,7 +17,6 @@ async def say_hi_or_start_register(message: Message):
                              keyboard=start_keyboard())
 
     else:
-        await state_dispenser.set(user_vk_id, RegisterState.wait_username_state)
         await message.answer("Добро пожаловать! Чтобы начать регистрацию, нажми кнопку:\n"
                              "(чтобы отменить регистрацию введи команду /cansel)",
                              keyboard=register_button())

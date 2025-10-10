@@ -10,7 +10,8 @@ from bot_vk.services.enter_scores import (ask_subject_for_enter_scores, cansel_e
 labeler = BotLabeler()
 
 
-@labeler.private_message(CommandRule("enter_scores", prefixes=["!", "/"]))
+@labeler.private_message(StateRule(None),
+                         CommandRule("enter_scores", prefixes=["!", "/"]))
 async def handler_enter_scores(message: Message):
     await ask_subject_for_enter_scores(message)
 
