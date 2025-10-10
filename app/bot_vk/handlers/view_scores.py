@@ -14,6 +14,6 @@ async def handler_view_score(message: Message):
     await ask_subject_for_view_scores(message)
 
 
-@labeler.private_message(StateRule(None), StateRule(ViewScoresState.wait_subject))
+@labeler.private_message(StateRule(ViewScoresState.wait_subject))
 async def handler_enter_subject_for_view_score(message: Message):
     await view_user_scores(message)

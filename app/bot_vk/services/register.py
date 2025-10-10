@@ -2,6 +2,8 @@ from vkbottle.bot import Message
 from bot_vk.states import RegisterState, state_dispenser
 from database import DatabaseManager
 from users.models import User
+from sqlalchemy import select
+from bot_vk.keyboards import start_keyboard
 
 
 async def start_register_ask_username(message: Message):
@@ -17,6 +19,15 @@ async def cansel_register(message: Message):
 
 async def save_username_ask_first_name(message: Message):
     username = message.text.strip()
+    username_in_db = None
+    async for session in DatabaseManager.get_session():
+        result = await session.execute(select(User).where(User.username == username))
+        username_in_db = result.scalar_one_or_none()
+
+    if username_in_db:
+        await message.answer("Имя пользователя уже существует. Попробуйте еще раз:")
+        return
+
     await state_dispenser.set(message.from_id, RegisterState.wait_first_name_state,
                               username=username)
     await message.answer("Введите Ваше имя:")
@@ -41,13 +52,16 @@ async def save_user_data_in_db(message: Message):
         user = User(username=username, first_name=first_name,
                     last_name=last_name, vk_id=message.from_id)
         async for session in DatabaseManager.get_session():
-            session.add(User)
+            session.add(user)
             await session.commit()
             await session.refresh(user)
 
         await message.answer("Поздравляем, регистрация завершена!\n"
                              f"Имя пользователя: {user.username}\n"
                              f"Имя: {user.first_name}\n"
-                             f"Фамилия: {user.last_name}\n")
+                             f"Фамилия: {user.last_name}\n",
+                             keyboard=start_keyboard())
+    except Exception:
+        await message.answer("Извините, произошла непредвиденная ошибка...")
     finally:
         await state_dispenser.delete(message.from_id)

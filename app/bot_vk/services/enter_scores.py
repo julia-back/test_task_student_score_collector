@@ -7,7 +7,7 @@ from sqlalchemy import select
 
 
 async def ask_subject_for_enter_scores(message: Message):
-    await state_dispenser.get(message.from_id, EnterScoresState.wait_subject)
+    await state_dispenser.set(message.from_id, EnterScoresState.wait_subject)
     await message.answer("Введите предмет, баллы которого хотите сохранить:")
 
 
@@ -36,29 +36,29 @@ async def save_user_score_in_db(message: Message):
                              "Попробуйте еще раз:")
         return
 
-    state = await state_dispenser.get()
+    state = await state_dispenser.get(message.from_id)
     subject = state.payload.get("subject")
 
     user = None
     async for session in DatabaseManager.get_session():
-        result = await session.execute(select(User).where(User.telegram_id == message.chat.id))
+        result = await session.execute(select(User).where(User.vk_id == message.from_id))
         user = result.scalar_one_or_none()
 
     if user:
         user_id = user.id
     else:
-        await state.clear()
-        await message.answer(text="Пользоатель не зарегистрирован, пожалуйста, "
-                                  "пройдите регистрацию.")
+        await state_dispenser.delete(message.from_id)
+        await message.answer("Пользоатель не зарегистрирован, пожалуйста, "
+                             "пройдите регистрацию.")
         return
 
-    score = Score(subject=subject, point=point, user_id=user_id)
+    score = Score(subject=subject, point=int(point), user_id=user_id)
     async for session in DatabaseManager.get_session():
         session.add(score)
         await session.commit()
         await session.refresh(score)
 
     await state_dispenser.delete(message.from_id)
-    await message.answer("Баллы успешно сохранены."
+    await message.answer("Баллы успешно сохранены.\n"
                          f"Предмет: {score.subject}\n"
                          f"Балл: {score.point}\n")
