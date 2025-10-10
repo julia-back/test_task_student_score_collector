@@ -8,6 +8,7 @@ from bot_telegram.routers.enter_scores import router as enter_scores_router
 from bot_telegram.routers.view_scores import router as view_scores_router
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 bot = Bot(token=str(settings.telegram_bot.api_key))
@@ -19,6 +20,7 @@ dp.include_router(view_scores_router)
 
 
 async def start_bot():
+    logger.info("Start telegram bot.")
     await dp.start_polling(bot)
 
 

@@ -1,7 +1,9 @@
 from database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import BigInteger, String
-from scores.models import Score
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from scores.models import Score
 
 
 class User(Base):

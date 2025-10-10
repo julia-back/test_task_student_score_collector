@@ -4,6 +4,10 @@ from database import DatabaseManager
 from users.models import User
 from sqlalchemy import select
 from bot_vk.keyboards import start_keyboard
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 async def start_register_ask_username(message: Message):
@@ -20,9 +24,12 @@ async def cansel_register(message: Message):
 async def save_username_ask_first_name(message: Message):
     username = message.text.strip()
     username_in_db = None
-    async for session in DatabaseManager.get_session():
-        result = await session.execute(select(User).where(User.username == username))
-        username_in_db = result.scalar_one_or_none()
+    try:
+        async for session in DatabaseManager.get_session():
+            result = await session.execute(select(User).where(User.username == username))
+            username_in_db = result.scalar_one_or_none()
+    except Exception:
+        logger.critical("Error during request from db.")
 
     if username_in_db:
         await message.answer("Имя пользователя уже существует. Попробуйте еще раз:")
@@ -63,5 +70,6 @@ async def save_user_data_in_db(message: Message):
                              keyboard=start_keyboard())
     except Exception:
         await message.answer("Извините, произошла непредвиденная ошибка...")
+        logger.critical("Error saving user in db.")
     finally:
         await state_dispenser.delete(message.from_id)

@@ -4,6 +4,10 @@ from database import DatabaseManager
 from scores.models import Score
 from users.models import User
 from sqlalchemy import select
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 async def ask_subject_for_enter_scores(message: Message):
@@ -40,9 +44,12 @@ async def save_user_score_in_db(message: Message):
     subject = state.payload.get("subject")
 
     user = None
-    async for session in DatabaseManager.get_session():
-        result = await session.execute(select(User).where(User.vk_id == message.from_id))
-        user = result.scalar_one_or_none()
+    try:
+        async for session in DatabaseManager.get_session():
+            result = await session.execute(select(User).where(User.vk_id == message.from_id))
+            user = result.scalar_one_or_none()
+    except Exception:
+        logger.critical("Error during get user in db.")
 
     if user:
         user_id = user.id
@@ -53,10 +60,13 @@ async def save_user_score_in_db(message: Message):
         return
 
     score = Score(subject=subject, point=int(point), user_id=user_id)
-    async for session in DatabaseManager.get_session():
-        session.add(score)
-        await session.commit()
-        await session.refresh(score)
+    try:
+        async for session in DatabaseManager.get_session():
+            session.add(score)
+            await session.commit()
+            await session.refresh(score)
+    except Exception:
+        logger.critical("Error saving score in db.")
 
     await state_dispenser.delete(message.from_id)
     await message.answer("Баллы успешно сохранены.\n"

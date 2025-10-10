@@ -6,12 +6,12 @@ from bot_vk.handlers.register import labeler as register_labeler
 from bot_vk.handlers.enter_scores import labeler as enter_scores_labeler
 from bot_vk.handlers.view_scores import labeler as view_scores_labeler
 from middleware import NoBotMiddleware
-import logging
 from bot_vk.states import state_dispenser
+import logging
 
 
+logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-
 
 api = API(str(settings.vk_bot.api_key))
 
@@ -31,4 +31,6 @@ bot = Bot(api=api,
 
 
 if __name__ == "__main__":
+    logger.info("Start vk bot.")
     bot.run_forever()
+    logger.info("Stop vk bot.")

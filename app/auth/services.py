@@ -7,28 +7,38 @@ from database import DatabaseManager
 from datetime import timedelta, datetime
 from config import settings
 import jwt
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 async def authenticate_user(username, password, session: AsyncSession = Depends(DatabaseManager.get_session)):
-    result = await session.scalars(select(User).where(User.username == username))
-    user = result.one_or_none()
+    try:
+        result = await session.scalars(select(User).where(User.username == username))
+        user = result.one_or_none()
 
-    if not user:
-        return False
+        if not user:
+            return False
 
-    is_verify_password = verify_password(password, user.hashed_password)
-    if not is_verify_password:
-        return False
+        is_verify_password = verify_password(password, user.hashed_password)
+        if not is_verify_password:
+            return False
 
-    return user
+        return user
+    except Exception:
+        logger.critical("Error during authentication user.")
 
 
 async def create_access_token(data_to_encode: dict) -> str:
-    to_encode = data_to_encode.copy()
+    try:
+        to_encode = data_to_encode.copy()
 
-    access_token_expire = timedelta(minutes=settings.token.access_token_expire_minutes)
-    expire = datetime.now(settings.timezone) + access_token_expire
-    to_encode.update({"exp": expire})
+        access_token_expire = timedelta(minutes=settings.token.access_token_expire_minutes)
+        expire = datetime.now(settings.timezone) + access_token_expire
+        to_encode.update({"exp": expire})
 
-    encoded_jwt = jwt.encode(to_encode, key=settings.token.secret_key, algorithm=settings.token.algorithm)
-    return encoded_jwt
+        encoded_jwt = jwt.encode(to_encode, key=settings.token.secret_key, algorithm=settings.token.algorithm)
+        return encoded_jwt
+    except Exception:
+        logger.critical("Error during create access token.")

@@ -2,18 +2,9 @@ from aiogram import types
 from database import DatabaseManager
 from sqlalchemy import select
 from users.models import User
-from scores.models import Score
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.fsm.context import FSMContext
 from bot_telegram.fsm_states import ViewScoresState
 from sqlalchemy.orm import selectinload
-
-
-# async def get_user_scores_from_inactive_buttons(user_scores: list[Score]):
-#     builder = InlineKeyboardBuilder()
-#     for score in user_scores:
-#         builder.button(text=f"{str(score.subject).title()} - {score.point}")
-#     return builder.adjust(1).as_markup()
 
 
 async def ask_subject_for_view(message: types.Message, state: FSMContext):

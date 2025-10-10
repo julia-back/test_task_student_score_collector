@@ -5,6 +5,10 @@ from database import DatabaseManager
 from sqlalchemy import select
 from users.models import User
 from bot_telegram.keyboards import get_start_keyboard
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 async def ask_username(message: types.Message, state: FSMContext):
@@ -68,6 +72,7 @@ async def save_user_data_in_db(message: types.Message, state: FSMContext):
                                   f"Имя пользователя: {user.username}",
                              reply_markup=get_start_keyboard())
     except Exception:
+        logger.critical("Error saving user in database during registration in telegram bot.")
         await message.answer(text="Произошка непредвиденная ошибка, приносим извинения.")
 
     await state.clear()

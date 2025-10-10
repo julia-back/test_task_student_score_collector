@@ -2,6 +2,10 @@ from users.schemas import CreateUser
 from sqlalchemy.ext.asyncio import AsyncSession
 from users.models import User
 from users.services.hash_password import get_hash_user_password
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 async def create_user_for_register(user_data: CreateUser, session: AsyncSession):
@@ -12,7 +16,10 @@ async def create_user_for_register(user_data: CreateUser, session: AsyncSession)
 
     user = User(**user_data_dict)
 
-    session.add(user)
-    await session.commit()
-    await session.refresh(user)
-    return user
+    try:
+        session.add(user)
+        await session.commit()
+        await session.refresh(user)
+        return user
+    except Exception:
+        logger.critical("Error during request from db, create user.")

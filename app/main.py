@@ -6,12 +6,22 @@ from auth.routers import router as auth_router
 from config import settings
 from contextlib import asynccontextmanager
 from database import db_manager
+import logging
+from logging_config import logging_queue_listener
+
+
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(fastapi_app: FastAPI):
+    logging_queue_listener.start()
+    logger.info("Start FastAPI application.")
     yield
+    logger.info("Stop FastAPI application.")
     await db_manager.dispose_engine()
+    logger.info("Stop database engine.")
+    logging_queue_listener.stop()
 
 
 app = FastAPI(lifespan=lifespan)
