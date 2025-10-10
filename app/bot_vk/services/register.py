@@ -2,7 +2,7 @@ from vkbottle.bot import Message
 
 
 async def start_register_ask_username(message: Message):
-    pass
+    await message.answer("Start register")
 
 
 async def cansel_register(message: Message):

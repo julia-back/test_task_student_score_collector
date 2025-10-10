@@ -11,7 +11,6 @@ class Score(Base):
     point: Mapped[int] = mapped_column(Integer)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    user_owner: Mapped["User"] = relationship("User", back_populates="scores")
 
     @validates("point")
     def validate_point(self, key: str, value: int):

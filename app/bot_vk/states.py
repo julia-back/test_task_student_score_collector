@@ -1,4 +1,7 @@
-from vkbottle import BaseStateGroup
+from vkbottle import BaseStateGroup, BuiltinStateDispenser
+
+
+state_dispenser = BuiltinStateDispenser()
 
 
 class RegisterState(BaseStateGroup):

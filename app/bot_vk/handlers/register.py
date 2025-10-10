@@ -10,6 +10,7 @@ from bot_vk.services.register import (start_register_ask_username, cansel_regist
 labeler = BotLabeler()
 
 
+@labeler.private_message(text="Начать регистрацию")
 @labeler.private_message(CommandRule("register", prefixes=["!", "/"]))
 async def handler_register(message: Message):
     await start_register_ask_username(message)
