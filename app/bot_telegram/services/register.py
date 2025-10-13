@@ -1,12 +1,11 @@
 from aiogram import types
 from aiogram.fsm.context import FSMContext
 from bot_telegram.fsm_states import RegistrationStates
+from bot_telegram.keyboards import get_start_keyboard
 from database import DatabaseManager
+from logging_config import app_logger
 from sqlalchemy import select
 from users.models import User
-from bot_telegram.keyboards import get_start_keyboard
-from logging_config import app_logger
-
 
 logger = app_logger.getChild(__name__)
 
@@ -58,19 +57,20 @@ async def save_user_data_in_db(message: types.Message, state: FSMContext):
     first_name = user_data.get("first_name")
     last_name = user_data.get("last_name")
 
-    user = User(username=username, first_name=first_name,
-                last_name=last_name, telegram_id=message.chat.id)
+    user = User(username=username, first_name=first_name, last_name=last_name, telegram_id=message.chat.id)
     try:
         async for session in DatabaseManager.get_session():
             session.add(user)
             await session.commit()
             await session.refresh(user)
 
-        await message.answer(text="Спасибо за Ваши ответы! Регистрация завершена.\n"
-                                  f"Имя: {user.first_name}\n"
-                                  f"Фамилия: {user.last_name}\n"
-                                  f"Имя пользователя: {user.username}",
-                             reply_markup=get_start_keyboard())
+        await message.answer(
+            text="Спасибо за Ваши ответы! Регистрация завершена.\n"
+            f"Имя: {user.first_name}\n"
+            f"Фамилия: {user.last_name}\n"
+            f"Имя пользователя: {user.username}",
+            reply_markup=get_start_keyboard(),
+        )
     except Exception:
         logger.critical("Error saving user in database during registration in telegram bot.")
         await message.answer(text="Произошка непредвиденная ошибка, приносим извинения.")

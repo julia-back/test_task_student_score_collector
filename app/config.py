@@ -1,9 +1,10 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import BaseModel, PostgresDsn
-from dotenv import load_dotenv
 import os
 from datetime import timezone
 from typing import Any
+
+from dotenv import load_dotenv
+from pydantic import BaseModel, PostgresDsn
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 load_dotenv()
 
@@ -20,7 +21,7 @@ class DatabaseConfig(BaseModel):
         "uq": "uq_%(table_name)s_%(column_0_name)s",
         "ck": "ck_%(table_name)s_%(constraint_name)s",
         "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-        "pk": "pk_%(table_name)s"
+        "pk": "pk_%(table_name)s",
     }
 
 
@@ -39,11 +40,7 @@ class VKBotConfig(BaseModel):
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_nested_delimiter="__",
-        case_sensitive=False
-    )
+    model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter="__", case_sensitive=False)
 
     timezone: Any = timezone.utc
 

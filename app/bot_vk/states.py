@@ -1,6 +1,5 @@
 from vkbottle import BaseStateGroup, BuiltinStateDispenser
 
-
 state_dispenser = BuiltinStateDispenser()
 
 

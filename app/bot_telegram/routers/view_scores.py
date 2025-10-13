@@ -1,9 +1,8 @@
-from aiogram import Router, types, F
+from aiogram import F, Router, types
 from aiogram.filters import Command
-from bot_telegram.services.view_scores import view_user_scores, ask_subject_for_view
-from bot_telegram.fsm_states import ViewScoresState
 from aiogram.fsm.context import FSMContext
-
+from bot_telegram.fsm_states import ViewScoresState
+from bot_telegram.services.view_scores import ask_subject_for_view, view_user_scores
 
 router = Router()
 

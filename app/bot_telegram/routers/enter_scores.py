@@ -1,10 +1,14 @@
-from aiogram import Router, types, F
+from aiogram import F, Router, types
 from aiogram.filters import Command
-from bot_telegram.fsm_states import EnterScoreState
 from aiogram.fsm.context import FSMContext
-from bot_telegram.services.enter_scores import (ask_subject_for_enter_score, save_subject,
-                                                ask_point, save_point, save_score_in_db)
-
+from bot_telegram.fsm_states import EnterScoreState
+from bot_telegram.services.enter_scores import (
+    ask_point,
+    ask_subject_for_enter_score,
+    save_point,
+    save_score_in_db,
+    save_subject,
+)
 
 router = Router()
 

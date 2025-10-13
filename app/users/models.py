@@ -1,7 +1,9 @@
-from database import Base
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import BigInteger, String
 from typing import TYPE_CHECKING
+
+from database import Base
+from sqlalchemy import BigInteger, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 if TYPE_CHECKING:
     from scores.models import Score
 

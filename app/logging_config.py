@@ -8,10 +8,9 @@
 """
 
 import logging
-from queue import Queue
-from logging.handlers import QueueHandler, QueueListener
 from logging import FileHandler, StreamHandler
-
+from logging.handlers import QueueHandler, QueueListener
+from queue import Queue
 
 app_logger = logging.getLogger("app")
 app_logger.setLevel(logging.DEBUG)
@@ -31,6 +30,4 @@ stream_formatter = logging.Formatter("%(levelname)s - %(name)s - %(message)s")
 stream_handler.setFormatter(stream_formatter)
 stream_handler.setLevel(logging.DEBUG)
 
-logging_queue_listener = QueueListener(queue_for_logger,
-                                       file_handler, stream_handler,
-                                       respect_handler_level=True)
+logging_queue_listener = QueueListener(queue_for_logger, file_handler, stream_handler, respect_handler_level=True)

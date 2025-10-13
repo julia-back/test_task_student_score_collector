@@ -1,7 +1,6 @@
-from fastapi import APIRouter
-from auth.schemas import Token, AuthUserData
 from auth.crud import auth_user_and_get_token
-
+from auth.schemas import AuthUserData, Token
+from fastapi import APIRouter
 
 router = APIRouter(prefix="/token", tags=["Token"])
 

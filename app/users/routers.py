@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Depends
-from users.schemas import CreateUser, ReadUser
-from users.crud import create_user_for_register
-from sqlalchemy.ext.asyncio import AsyncSession
 from database import DatabaseManager
-
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from users.crud import create_user_for_register
+from users.schemas import CreateUser, ReadUser
 
 router = APIRouter(prefix="/users", tags=["Users"])
 

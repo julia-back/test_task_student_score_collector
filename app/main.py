@@ -1,13 +1,13 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
-from fastapi import FastAPI
-from scores.routers import router as scores_router
-from users.routers import router as users_router
 from auth.routers import router as auth_router
 from config import settings
-from contextlib import asynccontextmanager
 from database import db_manager
-from logging_config import logging_queue_listener, app_logger
-
+from fastapi import FastAPI
+from logging_config import app_logger, logging_queue_listener
+from scores.routers import router as scores_router
+from users.routers import router as users_router
 
 logger = app_logger.getChild(__name__)
 
@@ -30,7 +30,4 @@ app.include_router(auth_router)
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",
-                host=settings.run.host,
-                port=settings.run.port,
-                reload=True)
+    uvicorn.run("main:app", host=settings.run.host, port=settings.run.port, reload=True)

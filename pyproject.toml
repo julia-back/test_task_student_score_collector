@@ -30,7 +30,7 @@ flake8 = "^7.3.0"
 line-length = 119
 
 [tool.isort]
-line-length = 119
+line_length = 119
 
 
 [build-system]

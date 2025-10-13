@@ -1,9 +1,8 @@
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from config import settings
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import MetaData
 from logging_config import app_logger
-
+from sqlalchemy import MetaData
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.orm import DeclarativeBase
 
 logger = app_logger.getChild(__name__)
 

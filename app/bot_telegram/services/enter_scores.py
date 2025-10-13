@@ -1,12 +1,11 @@
-from aiogram.fsm.context import FSMContext
 from aiogram import types
+from aiogram.fsm.context import FSMContext
 from bot_telegram.fsm_states import EnterScoreState
 from database import DatabaseManager
-from scores.models import Score
-from users.models import User
-from sqlalchemy import select
 from logging_config import app_logger
-
+from scores.models import Score
+from sqlalchemy import select
+from users.models import User
 
 logger = app_logger.getChild(__name__)
 
@@ -55,8 +54,7 @@ async def save_score_in_db(message: types.Message, state: FSMContext):
             user_id = user.id
         else:
             await state.clear()
-            await message.answer(text="Пользоатель не зарегистрирован, пожалуйста, "
-                                      "пройдите регистрацию.")
+            await message.answer(text="Пользоатель не зарегистрирован, пожалуйста, " "пройдите регистрацию.")
             return
 
         data = await state.get_data()
@@ -70,8 +68,10 @@ async def save_score_in_db(message: types.Message, state: FSMContext):
             await session.refresh(score_for_save)
 
         await state.clear()
-        await message.answer(text="Баллы успешно сохранены!\n"
-                                  f"Предмет - {score_for_save.subject}\n"
-                                  f"Балл ЕГЭ - {score_for_save.point}")
+        await message.answer(
+            text="Баллы успешно сохранены!\n"
+            f"Предмет - {score_for_save.subject}\n"
+            f"Балл ЕГЭ - {score_for_save.point}"
+        )
     except Exception:
         logger.critical("Error saving score in database.")

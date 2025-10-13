@@ -1,7 +1,6 @@
-from vkbottle.bot import Message, BotLabeler
-from vkbottle.dispatch.rules.base import CommandRule, StateRule
 from bot_vk.services.start import say_hi_or_start_register
-
+from vkbottle.bot import BotLabeler, Message
+from vkbottle.dispatch.rules.base import CommandRule, StateRule
 
 labeler = BotLabeler()
 

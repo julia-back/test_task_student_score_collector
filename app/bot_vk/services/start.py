@@ -1,10 +1,9 @@
-from vkbottle.bot import Message
+from bot_vk.keyboards import register_button, start_keyboard
 from database import DatabaseManager
-from users.models import User
-from sqlalchemy import select
-from bot_vk.keyboards import start_keyboard, register_button
 from logging_config import app_logger
-
+from sqlalchemy import select
+from users.models import User
+from vkbottle.bot import Message
 
 logger = app_logger.getChild(__name__)
 
@@ -20,10 +19,11 @@ async def say_hi_or_start_register(message: Message):
         logger.critical("Error during request from db.")
 
     if user:
-        await message.answer("Привет, выбери действие в меню снизу:",
-                             keyboard=start_keyboard())
+        await message.answer("Привет, выбери действие в меню снизу:", keyboard=start_keyboard())
 
     else:
-        await message.answer("Добро пожаловать! Чтобы начать регистрацию, нажми кнопку:\n"
-                             "(чтобы отменить регистрацию введи команду /cansel)",
-                             keyboard=register_button())
+        await message.answer(
+            "Добро пожаловать! Чтобы начать регистрацию, нажми кнопку:\n"
+            "(чтобы отменить регистрацию введи команду /cansel)",
+            keyboard=register_button(),
+        )

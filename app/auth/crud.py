@@ -1,16 +1,17 @@
-from auth.schemas import AuthUserData
-from fastapi import HTTPException, status
+from auth.schemas import AuthUserData, Token
 from auth.services import authenticate_user, create_access_token
-from auth.schemas import Token
+from fastapi import HTTPException, status
 
 
 async def auth_user_and_get_token(user_data: AuthUserData) -> Token:
     user = await authenticate_user(user_data.username, user_data.password)
 
     if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Incorrect username or password.",
-                            headers={"WWW-Authenticate": "Bearer"})
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
     access_token = await create_access_token(data_to_encode={"sub": user.username})
 

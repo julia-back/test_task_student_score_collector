@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
-from scores.schemas import ScoreBase, ReadScores, CreateScores, UpdateScore
-from app.scores.crud import get_all_scores, create_new_score, get_score_by_id, update_score_patch
+from scores.schemas import CreateScores, ReadScores, ScoreBase, UpdateScore
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.database import DatabaseManager
 
+from app.database import DatabaseManager
+from app.scores.crud import create_new_score, get_all_scores, get_score_by_id, update_score_patch
 
 router = APIRouter(prefix="/scores", tags=["Scores"])
 
@@ -24,7 +24,7 @@ async def get_score(score_id: int, session: AsyncSession = Depends(DatabaseManag
 
 
 @router.patch("/{score_id}/update/", response_model=ScoreBase)
-async def update_score(score_id: int,
-                       score_data: UpdateScore,
-                       session: AsyncSession = Depends(DatabaseManager.get_session)):
+async def update_score(
+    score_id: int, score_data: UpdateScore, session: AsyncSession = Depends(DatabaseManager.get_session)
+):
     return await update_score_patch(score_id, score_data, session)

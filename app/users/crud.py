@@ -1,9 +1,8 @@
-from users.schemas import CreateUser
+from logging_config import app_logger
 from sqlalchemy.ext.asyncio import AsyncSession
 from users.models import User
+from users.schemas import CreateUser
 from users.services.hash_password import get_hash_user_password
-from logging_config import app_logger
-
 
 logger = app_logger.getChild(__name__)
 

@@ -1,12 +1,17 @@
-from aiogram import Router, types, F
+from aiogram import F, Router, types
 from aiogram.filters import Command, StateFilter
-from bot_telegram.fsm_states import RegistrationStates
 from aiogram.fsm.context import FSMContext
-from bot_telegram.services.register import (ask_username, check_unique_and_save_username,
-                                            ask_first_name, save_first_name, ask_last_name,
-                                            save_last_name, save_user_data_in_db,
-                                            cansel_register)
-
+from bot_telegram.fsm_states import RegistrationStates
+from bot_telegram.services.register import (
+    ask_first_name,
+    ask_last_name,
+    ask_username,
+    cansel_register,
+    check_unique_and_save_username,
+    save_first_name,
+    save_last_name,
+    save_user_data_in_db,
+)
 
 router = Router()
 
