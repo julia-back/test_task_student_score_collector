@@ -1,6 +1,10 @@
 """
-Прослушивание логов запускается и останавливается с FastAPI-приложением
-в lifespan
+Прослушивание логов запускается и останавливается:
+ - с FastAPI-приложением (в lifespan) в main.py
+ - с Telegram-ботом в start_telegram_bot.py
+ - с VK-ботом в start_vk_bot.py
+для каждого процесса.
+Все логеры в модулях являются наследниками app_logger.
 """
 
 import logging
@@ -30,4 +34,3 @@ stream_handler.setLevel(logging.DEBUG)
 logging_queue_listener = QueueListener(queue_for_logger,
                                        file_handler, stream_handler,
                                        respect_handler_level=True)
-print("логур рут")
