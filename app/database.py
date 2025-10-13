@@ -2,6 +2,10 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from config import settings
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import MetaData
+from logging_config import app_logger
+
+
+logger = app_logger.getChild(__name__)
 
 
 class DatabaseManager:
@@ -14,6 +18,7 @@ class DatabaseManager:
 
     @staticmethod
     async def get_session():
+        logger.debug("Getting session db.")
         async with db_manager.session_maker() as session:
             yield session
 

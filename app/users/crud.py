@@ -2,10 +2,10 @@ from users.schemas import CreateUser
 from sqlalchemy.ext.asyncio import AsyncSession
 from users.models import User
 from users.services.hash_password import get_hash_user_password
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def create_user_for_register(user_data: CreateUser, session: AsyncSession):

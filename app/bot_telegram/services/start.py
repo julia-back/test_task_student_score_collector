@@ -3,10 +3,10 @@ from database import DatabaseManager
 from users.models import User
 from sqlalchemy import select
 from bot_telegram.keyboards import get_start_keyboard, get_register_button
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def sey_hi_or_start_register(message: types.Message):

@@ -4,10 +4,10 @@ from database import DatabaseManager
 from scores.models import Score
 from users.models import User
 from sqlalchemy import select
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def ask_subject_for_enter_scores(message: Message):

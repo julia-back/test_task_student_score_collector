@@ -3,10 +3,10 @@ from database import DatabaseManager
 from users.models import User
 from sqlalchemy import select
 from bot_vk.keyboards import start_keyboard, register_button
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def say_hi_or_start_register(message: Message):

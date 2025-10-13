@@ -5,10 +5,10 @@ from database import DatabaseManager
 from sqlalchemy import select
 from users.models import User
 from bot_telegram.keyboards import get_start_keyboard
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def ask_username(message: types.Message, state: FSMContext):

@@ -2,12 +2,12 @@ from http.client import HTTPException
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.scores.models import Score
-from sqlalchemy import select, update
+from sqlalchemy import select
 from scores.schemas import CreateScores, UpdateScore
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def get_all_scores(session: AsyncSession) -> list[Score]:

@@ -4,10 +4,10 @@ from database import DatabaseManager
 from users.models import User
 from sqlalchemy import select
 from bot_vk.keyboards import start_keyboard
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def start_register_ask_username(message: Message):

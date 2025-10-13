@@ -7,10 +7,10 @@ from database import DatabaseManager
 from datetime import timedelta, datetime
 from config import settings
 import jwt
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def authenticate_user(username, password, session: AsyncSession = Depends(DatabaseManager.get_session)):

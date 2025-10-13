@@ -4,10 +4,10 @@ from users.models import User
 from database import DatabaseManager
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
-import logging
+from logging_config import app_logger
 
 
-logger = logging.getLogger(__name__)
+logger = app_logger.getChild(__name__)
 
 
 async def ask_subject_for_view_scores(message: Message):
