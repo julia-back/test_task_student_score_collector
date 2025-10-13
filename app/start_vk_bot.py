@@ -5,7 +5,7 @@ from bot_vk.handlers.view_scores import labeler as view_scores_labeler
 from bot_vk.states import state_dispenser
 from config import settings
 from logging_config import app_logger, logging_queue_listener
-from middleware import NoBotMiddleware
+from bot_vk.middleware import NoBotMiddleware
 from vkbottle import API
 from vkbottle.bot import Bot, BotLabeler
 

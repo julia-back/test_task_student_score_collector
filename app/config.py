@@ -40,7 +40,10 @@ class VKBotConfig(BaseModel):
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter="__", case_sensitive=False)
+    model_config = SettingsConfigDict(env_file=".env",
+                                      env_nested_delimiter="__",
+                                      case_sensitive=False,
+                                      extra="allow")
 
     timezone: Any = timezone.utc
 

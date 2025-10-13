@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends
 from scores.schemas import CreateScores, ReadScores, ScoreBase, UpdateScore
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import DatabaseManager
-from app.scores.crud import create_new_score, get_all_scores, get_score_by_id, update_score_patch
+from database import DatabaseManager
+from scores.crud import create_new_score, get_all_scores, get_score_by_id, update_score_patch
 
 router = APIRouter(prefix="/scores", tags=["Scores"])
 

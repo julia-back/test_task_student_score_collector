@@ -5,7 +5,7 @@ from scores.schemas import CreateScores, UpdateScore
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.scores.models import Score
+from scores.models import Score
 
 logger = app_logger.getChild(__name__)
 
