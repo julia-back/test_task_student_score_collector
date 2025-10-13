@@ -1,0 +1,41 @@
+services:
+  app:
+    build: .
+    env_file:
+      - /app/.env
+    command: poetry run alembic upgrade head && poetry run python main.py
+    expose:
+      - 8000
+    restart: on-failure
+
+  telegram_bot:
+    build: .
+    env_file:
+      - /app/.env
+    command: poetry run python start_telegram_bot.py
+    restart: on-failure
+
+  vk_bot:
+    build: .
+    env_file:
+      - /app/.env
+    command: poetry run python start_vk_bot.py
+    restart: on-failure
+
+  db:
+    image: postgres:17.6
+    env_file:
+      - /app/.env
+    expose:
+      - 5432
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    restart: on-failure
+
+
+networks:
+  default:
+
+
+volumes:
+  postgres_volume:
