@@ -3,10 +3,14 @@ services:
     build: .
     env_file:
       - /app/.env
-    command: poetry run alembic upgrade head && poetry run python main.py
+    command: sh -c "poetry run alembic upgrade head && poetry run python main.py"
+    ports:
+      - 8000:8000
     expose:
       - 8000
     restart: on-failure
+    depends_on:
+      - db
 
   telegram_bot:
     build: .
