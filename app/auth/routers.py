@@ -1,9 +1,8 @@
 from auth.crud import auth_user_and_get_token
 from auth.schemas import AuthUserData, Token
-from fastapi import APIRouter
-from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import Depends
 from database import DatabaseManager
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/token", tags=["Token"])
 
