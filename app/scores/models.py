@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from database import Base
 from sqlalchemy import ForeignKey, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column, validates, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
 
 if TYPE_CHECKING:
     from users.models import User

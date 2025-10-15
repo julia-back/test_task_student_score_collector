@@ -1,11 +1,10 @@
 from http.client import HTTPException
 
 from logging_config import app_logger
+from scores.models import Score
 from scores.schemas import CreateScores, UpdateScore
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from scores.models import Score
 
 logger = app_logger.getChild(__name__)
 

@@ -1,10 +1,5 @@
-from bot_vk.services.register import (
-    cansel_register,
-    save_first_name_ask_last_name,
-    save_user_data_in_db,
-    save_username_ask_first_name,
-    start_register_ask_username,
-)
+from bot_vk.services.register import (cansel_register, save_first_name_ask_last_name, save_user_data_in_db,
+                                      save_username_ask_first_name, start_register_ask_username)
 from bot_vk.states import RegisterState
 from vkbottle.bot import BotLabeler, Message
 from vkbottle.dispatch.rules.base import CommandRule, StateGroupRule, StateRule
