@@ -7,11 +7,12 @@ class ScoreBase(BaseModel):
 
 
 class CreateScores(ScoreBase):
-    pass
+    user_id: int
 
 
 class ReadScores(ScoreBase):
     id: int
+    user_id: int
 
 
 class UpdateScore(ScoreBase):
