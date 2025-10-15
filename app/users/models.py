@@ -20,4 +20,4 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(nullable=True)
     is_active: Mapped[bool] = mapped_column(default=True)
 
-    scores: Mapped[list["Score"]] = relationship("Score", backref="user_owner")
+    scores: Mapped[list["Score"]] = relationship(back_populates="user_owner", cascade="all")
