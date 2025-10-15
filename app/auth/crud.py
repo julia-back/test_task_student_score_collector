@@ -1,10 +1,11 @@
 from auth.schemas import AuthUserData, Token
 from auth.services import authenticate_user, create_access_token
 from fastapi import HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def auth_user_and_get_token(user_data: AuthUserData) -> Token:
-    user = await authenticate_user(user_data.username, user_data.password)
+async def auth_user_and_get_token(user_data: AuthUserData, session: AsyncSession) -> Token:
+    user = await authenticate_user(user_data.username, user_data.password, session)
 
     if not user:
         raise HTTPException(

@@ -2,8 +2,6 @@ from datetime import datetime, timedelta
 
 import jwt
 from config import settings
-from database import DatabaseManager
-from fastapi import Depends
 from logging_config import app_logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -13,10 +11,10 @@ from users.services.hash_password import verify_password
 logger = app_logger.getChild(__name__)
 
 
-async def authenticate_user(username, password, session: AsyncSession = Depends(DatabaseManager.get_session)):
+async def authenticate_user(username, password, session: AsyncSession):
     try:
-        result = await session.scalars(select(User).where(User.username == username))
-        user = result.one_or_none()
+        result = await session.execute(select(User).where(User.username == username))
+        user = result.scalar_one_or_none()
 
         if not user:
             return False
@@ -26,8 +24,8 @@ async def authenticate_user(username, password, session: AsyncSession = Depends(
             return False
 
         return user
-    except Exception:
-        logger.critical("Error during authentication user.")
+    except Exception as e:
+        logger.critical(f"Error during authentication user: {e}.")
 
 
 async def create_access_token(data_to_encode: dict) -> str:
