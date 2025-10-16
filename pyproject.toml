@@ -24,6 +24,9 @@ vkbottle = "^4.6.2"
 black = "^25.9.0"
 isort = "^6.1.0"
 flake8 = "^7.3.0"
+pytest = "^8.4.2"
+pytest-asyncio = "^1.2.0"
+httpx = "^0.28.1"
 
 
 [tool.black]
@@ -31,6 +34,11 @@ line-length = 119
 
 [tool.isort]
 line_length = 119
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "./app"]
+addopts = ["--import-mode=importlib", "-s", "--tb=long", "--show-capture=all", "-v", "-x"]
 
 
 [build-system]
