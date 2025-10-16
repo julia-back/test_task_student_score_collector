@@ -46,6 +46,8 @@ class Settings(BaseSettings):
                                       extra="allow")
 
     timezone: Any = timezone.utc
+    base_dir_project: str = os.path.dirname(os.path.dirname(__file__))
+    path_to_app: str = os.path.dirname(__file__)
 
     run: RunConfig = RunConfig()
     db: DatabaseConfig = DatabaseConfig()
