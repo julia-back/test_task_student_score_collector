@@ -1,11 +1,6 @@
-from typing import TYPE_CHECKING
-
-from database import Base
+from app import Base, Score
 from sqlalchemy import BigInteger, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-if TYPE_CHECKING:
-    from scores.models import Score
 
 
 class User(Base):
@@ -20,4 +15,4 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(nullable=True)
     is_active: Mapped[bool] = mapped_column(default=True)
 
-    scores: Mapped[list["Score"]] = relationship(back_populates="user_owner", cascade="all")
+    scores: Mapped[list["Score"]] = relationship(backref="user_owner", cascade="all")
